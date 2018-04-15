@@ -33,7 +33,11 @@ export class TweetForm extends React.Component<Props, IState> {
         />
 
         <div>
-          <span>{this.state.characterLimit}</span>
+          <span>
+            {!this.state.characterLimit
+              ? "..."
+              : this.state.characterLimit - this.state.content.length}
+          </span>
           <button type="button" onClick={this.onSubmit}>
             Tweet
           </button>
