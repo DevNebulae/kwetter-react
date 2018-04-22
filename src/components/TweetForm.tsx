@@ -3,12 +3,12 @@ import * as React from "react";
 
 type Props = any;
 
-interface IState {
+interface State {
   characterLimit: number | null;
   content: string;
 }
 
-export class TweetForm extends React.Component<Props, IState> {
+export class TweetForm extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -24,20 +24,25 @@ export class TweetForm extends React.Component<Props, IState> {
   }
 
   public render() {
+    const { characterLimit, content } = this.state;
     return (
       <form>
         <textarea
           onInput={this.onInput}
           placeholder="What's on your mind today?"
-          value={this.state.content}
+          value={content}
         />
 
         <div>
+<<<<<<< Updated upstream
           <span>
             {!this.state.characterLimit
               ? "..."
               : this.state.characterLimit - this.state.content.length}
           </span>
+=======
+          <span>{characterLimit}</span>
+>>>>>>> Stashed changes
           <button type="button" onClick={this.onSubmit}>
             Tweet
           </button>
@@ -51,6 +56,8 @@ export class TweetForm extends React.Component<Props, IState> {
   };
 
   public onSubmit = () => {
-    axios.post("http://localhost:8080/tweets", this.state);
+    axios
+      .post("http://localhost:8080/tweets", this.state)
+      .then(response => this.setState({ content: "" }));
   };
 }
