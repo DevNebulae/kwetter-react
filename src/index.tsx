@@ -13,7 +13,6 @@ const kc = Keycloak({
 kc.init({ onLoad: "login-required" }).success(authenticated => {
   if (authenticated) {
     ReactDOM.render(<App />, document.getElementById("root") as HTMLElement);
-    axios.defaults.headers.common.Authorization = kc.token;
   }
 });
 
