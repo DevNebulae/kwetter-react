@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 interface Tweet {
   id: number;
@@ -37,7 +38,7 @@ export class Timeline extends React.Component<{}, State> {
         {tweets.map(({ id, author, postedAt, content }) => (
           <article key={id}>
             <header>
-              <span>{author}</span> -{" "}
+              <Link to={`/profile/${author}`}>{author}</Link> -{" "}
               <span>
                 {new Date(postedAt.epochSecond * 1000).toDateString()}
               </span>
