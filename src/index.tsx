@@ -2,6 +2,7 @@ import axios from "axios";
 import * as Keycloak from "keycloak-js";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 
@@ -12,7 +13,12 @@ const kc = Keycloak({
 });
 kc.init({ onLoad: "login-required" }).success(authenticated => {
   if (authenticated) {
-    ReactDOM.render(<App />, document.getElementById("root") as HTMLElement);
+    ReactDOM.render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>,
+      document.getElementById("root") as HTMLElement
+    );
   }
 });
 
