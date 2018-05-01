@@ -1,0 +1,9 @@
+.application__header {
+  height: 56px;
+  line-height: 56px;
+  display: flex;
+  flex-direction: row;
+  grid-column: span 12;
+  box-sizing: border-box;
+  padding: 0 24px;
+}

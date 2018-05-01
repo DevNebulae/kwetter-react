@@ -1,10 +1,16 @@
 import axios from "axios";
 import * as React from "react";
+import { TweetStore } from "../../../state/Tweet";
+import { ActionBar } from "./action-bar/ActionBar";
 
-type Props = any;
+import "./styles.css";
+
+interface Props {
+  store: TweetStore;
+}
 
 interface State {
-  characterLimit: number | null;
+  characterLimit?: number;
   content: string;
 }
 
@@ -12,7 +18,6 @@ export class TweetForm extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
-      characterLimit: null,
       content: ""
     };
   }
@@ -26,21 +31,14 @@ export class TweetForm extends React.Component<Props, State> {
   public render() {
     const { characterLimit, content } = this.state;
     return (
-      <form>
+      <form className="tweet__form">
         <textarea
           onInput={this.onInput}
           placeholder="What's on your mind today?"
           value={content}
         />
 
-        <div>
-          <span>
-            {!characterLimit ? "..." : characterLimit - content.length}
-          </span>
-          <button type="button" onClick={this.onSubmit}>
-            Tweet
-          </button>
-        </div>
+        <ActionBar characterLimit={characterLimit} onSubmit={this.onSubmit} />
       </form>
     );
   }
@@ -50,8 +48,6 @@ export class TweetForm extends React.Component<Props, State> {
   };
 
   public onSubmit = () => {
-    axios
-      .post("http://localhost:8080/tweets", this.state)
-      .then(response => this.setState({ content: "" }));
+    this.props.store.postTweet(this.state.content);
   };
 }

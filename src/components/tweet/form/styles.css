@@ -1,0 +1,9 @@
+.tweet__form {
+  grid-column: 3 / span 8;
+  width: 100%;
+}
+
+.tweet__form > textarea {
+  resize: vertical;
+  width: 100%;
+}

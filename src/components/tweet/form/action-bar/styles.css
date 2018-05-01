@@ -1,0 +1,5 @@
+.tweet__form__action-bar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}

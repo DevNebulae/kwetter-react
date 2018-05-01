@@ -1,53 +1,27 @@
-import axios from "axios";
+import { observer } from "mobx-react";
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { TweetStore } from "../../state/Tweet";
+import { TweetComponent } from "../tweet/Tweet";
 
-interface Tweet {
-  id: number;
-  author: string;
-  content: string;
-  postedAt: {
-    epochSecond: number;
-    nano: number;
-  };
+import "./styles.css";
+
+interface Props {
+  store: TweetStore;
 }
 
-interface State {
-  tweets: Tweet[];
-}
-
-export class Timeline extends React.Component<{}, State> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      tweets: []
-    };
-  }
-
+@observer
+export class Timeline extends React.Component<Props> {
   public componentDidMount() {
-    axios
-      .get("http://localhost:8080/tweets/timeline")
-      .then(tweets => this.setState({ tweets: tweets.data }));
+    this.props.store.getTweets();
   }
 
   public render() {
-    const { tweets } = this.state;
-
     return (
-      <section>
-        {tweets.map(({ id, author, postedAt, content }) => (
-          <article key={id}>
-            <header>
-              <Link to={`/profile/${author}`}>{author}</Link> -{" "}
-              <span>
-                {new Date(postedAt.epochSecond * 1000).toDateString()}
-              </span>
-            </header>
-
-            <main>{content}</main>
-          </article>
+      <main className="timeline">
+        {this.props.store.tweets.map((tweet, index) => (
+          <TweetComponent key={index} tweet={tweet} />
         ))}
-      </section>
+      </main>
     );
   }
 }
