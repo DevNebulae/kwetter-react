@@ -1,6 +1,7 @@
 import { observer } from "mobx-react";
 import * as React from "react";
 import { TweetStore } from "../../state/Tweet";
+import { userStore } from "../../state/User";
 import { TweetComponent } from "../tweet/Tweet";
 
 import "./styles.css";
@@ -11,15 +12,11 @@ interface Props {
 
 @observer
 export class Timeline extends React.Component<Props> {
-  public componentDidMount() {
-    this.props.store.getTweets();
-  }
-
   public render() {
     return (
       <main className="timeline">
         {this.props.store.tweets.map((tweet, index) => (
-          <TweetComponent key={index} tweet={tweet} />
+          <TweetComponent key={index} store={userStore} tweet={tweet} />
         ))}
       </main>
     );

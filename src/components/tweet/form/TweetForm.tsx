@@ -38,7 +38,10 @@ export class TweetForm extends React.Component<Props, State> {
           value={content}
         />
 
-        <ActionBar characterLimit={characterLimit} onSubmit={this.onSubmit} />
+        <ActionBar
+          characterLimit={characterLimit && characterLimit - content.length}
+          onSubmit={this.onSubmit}
+        />
       </form>
     );
   }

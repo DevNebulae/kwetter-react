@@ -7,14 +7,19 @@ import App from "./components/app/App";
 import registerServiceWorker from "./registerServiceWorker";
 
 import "./index.css";
+import { tweetStore } from "./state/Tweet";
+import { userStore } from "./state/User";
 
-const kc = Keycloak({
+export const kc = Keycloak({
   clientId: "kwetter-frontend-app",
   realm: "kwetter",
   url: "http://localhost:8082/auth"
 });
 kc.init({ onLoad: "login-required" }).success(authenticated => {
   if (authenticated) {
+    tweetStore.getTweets();
+    userStore.getUsers();
+
     ReactDOM.render(
       <BrowserRouter>
         <App />

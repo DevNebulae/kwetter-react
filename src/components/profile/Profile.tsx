@@ -53,6 +53,10 @@ export class UserProfile extends React.Component<Props, State> {
           <li>User last name {user.lastName}</li>
           <li>User username {user.username}</li>
         </ul>
+
+        {/* {kc.subject !== this.props.match.params.accountId && (
+          <button type="button">Follow</button>
+        )} */}
       </>
     );
   }
