@@ -12,6 +12,7 @@ export const Header: React.StatelessComponent = props => (
 
     <nav>
       <Link to="/">Home</Link>
+      <a href="http://localhost:8082/auth/realms/kwetter/edit">Edit account</a>
     </nav>
   </header>
 );

@@ -18,6 +18,7 @@ export const kc = Keycloak({
 kc.init({ onLoad: "login-required" }).success(authenticated => {
   if (authenticated) {
     tweetStore.getTweets();
+    userStore.getFollowing();
     userStore.getUsers();
 
     ReactDOM.render(

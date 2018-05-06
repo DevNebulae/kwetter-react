@@ -1,5 +1,6 @@
 import axios from "axios";
 import { action, observable, runInAction } from "mobx";
+import { kc } from "..";
 
 // import axios from "axios";
 // import { action } from "mobx";
@@ -29,6 +30,19 @@ export class UserStore {
 
     runInAction(() => {
       this.following.add(user.data.followed);
+      // tslint:disable-next-line
+      console.log(this.following);
+    });
+  }
+
+  @action
+  public async getFollowing() {
+    const following = await axios.get<Follower[]>(
+      `http://localhost:8080/accounts/${kc.subject}/following`
+    );
+
+    runInAction(() => {
+      following.data.forEach(follower => this.following.add(follower.followed));
     });
   }
 
@@ -38,6 +52,17 @@ export class UserStore {
 
     runInAction(() => {
       users.data.forEach(user => this.users.set(user.id, user));
+    });
+  }
+
+  @action
+  public async unfollow(followed: string) {
+    await axios.post(`http://localhost:8080/accounts/${followed}/unfollow`);
+
+    runInAction(() => {
+      this.following.delete(followed);
+      // tslint:disable-next-line
+      console.log(this.following);
     });
   }
 }
