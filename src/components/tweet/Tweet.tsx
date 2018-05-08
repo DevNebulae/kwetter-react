@@ -1,36 +1,53 @@
 import { observer } from "mobx-react";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Tweet } from "../../state/Tweet";
+import { kc } from "../..";
+import { Tweet, TweetStore } from "../../state/Tweet";
 import { UserStore } from "../../state/User";
 import { RowSpacer } from "../layout/row-spacer/RowSpacer";
 
 import "./styles.css";
 
 interface Props {
-  store: UserStore;
   tweet: Tweet;
+  tweetStore: TweetStore;
+  userStore: UserStore;
 }
 
-export const TweetComponent: React.StatelessComponent<Props> = observer(
-  ({ store, tweet }) => (
-    <article>
-      <header className="tweet__header">
-        <span className="author">
-          <Link to={`/profile/${tweet.author}`}>
-            {store.users.get(tweet.author) &&
-              store.users.get(tweet.author).username}
-          </Link>
-        </span>
+@observer
+export class TweetComponent extends React.Component<Props> {
+  public render() {
+    const { tweet, userStore } = this.props;
+    const user = userStore.users.get(tweet.author);
 
-        <RowSpacer />
+    return (
+      <article>
+        <header className="tweet__header">
+          <span className="author">
+            <Link to={`/profile/${tweet.author}`}>{user && user.username}</Link>
+          </span>
 
-        <span className="date">
-          {new Date(tweet.postedAt.epochSecond * 1000).toLocaleDateString()}
-        </span>
-      </header>
+          <RowSpacer />
 
-      <section>{tweet.content}</section>
-    </article>
-  )
-);
+          <span className="date">
+            {new Date(tweet.postedAt.epochSecond * 1000).toLocaleDateString()}
+          </span>
+        </header>
+
+        <section>{tweet.content}</section>
+
+        {tweet.author === kc.subject && (
+          <section className="actions">
+            <button onClick={this.onDelete} type="button">
+              Delete
+            </button>
+          </section>
+        )}
+      </article>
+    );
+  }
+
+  private onDelete = () => {
+    this.props.tweetStore.deleteTweet(this.props.tweet.id);
+  };
+}

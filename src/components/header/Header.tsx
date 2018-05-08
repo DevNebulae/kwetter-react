@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { kc } from "../..";
 import { RowSpacer } from "../layout/row-spacer/RowSpacer";
 
 import "./styles.css";
@@ -11,8 +12,15 @@ export const Header: React.StatelessComponent = props => (
     <RowSpacer />
 
     <nav>
-      <Link to="/">Home</Link>
-      <a href="http://localhost:8082/auth/realms/kwetter/edit">Edit account</a>
+      <Link to="/" style={{ marginRight: "12px" }}>
+        Home
+      </Link>
+      <Link to={`/profile/${kc.subject}`} style={{ marginRight: "12px" }}>
+        My profile
+      </Link>
+      <a href="http://localhost:8082/auth/realms/kwetter/account">
+        Edit account
+      </a>
     </nav>
   </header>
 );

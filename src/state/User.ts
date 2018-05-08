@@ -6,6 +6,7 @@ import { kc } from "..";
 // import { action } from "mobx";
 
 interface Follower {
+  id: string;
   follower: string;
   followed: string;
 }
@@ -19,6 +20,7 @@ interface User {
 }
 
 export class UserStore {
+  @observable public followerList: Set<Follower> = new Set();
   @observable public following: Set<string> = new Set();
   @observable public users: Map<string, User> = new Map();
 
@@ -32,6 +34,17 @@ export class UserStore {
       this.following.add(user.data.followed);
       // tslint:disable-next-line
       console.log(this.following);
+    });
+  }
+
+  @action
+  public async getFollowersList() {
+    const followerList = await axios.get<Follower[]>(
+      `http://localhost:8080/accounts/followers-list`
+    );
+
+    runInAction(() => {
+      this.followerList = new Set(followerList.data);
     });
   }
 
