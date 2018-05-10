@@ -1,0 +1,11 @@
+.search__wrapper {
+  grid-column: 3 / span 8;
+}
+
+.search__wrapper > * {
+  width: 100%;
+}
+
+/* .search__input {
+  width: 100%;
+} */

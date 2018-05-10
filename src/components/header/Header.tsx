@@ -15,6 +15,9 @@ export const Header: React.StatelessComponent = props => (
       <Link to="/" style={{ marginRight: "12px" }}>
         Home
       </Link>
+      <Link to="/search" style={{ marginRight: "12px" }}>
+        Search tweets
+      </Link>
       <Link to={`/profile/${kc.subject}`} style={{ marginRight: "12px" }}>
         My profile
       </Link>

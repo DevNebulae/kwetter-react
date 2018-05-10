@@ -21,8 +21,8 @@ export class TweetComponent extends React.Component<Props> {
     const user = userStore.users.get(tweet.author);
 
     return (
-      <article>
-        <header className="tweet__header">
+      <article style={{ marginBottom: "32px" }}>
+        <header className="tweet__header" style={{ marginBottom: "16px" }}>
           <span className="author">
             <Link to={`/profile/${tweet.author}`}>{user && user.username}</Link>
           </span>
@@ -30,11 +30,11 @@ export class TweetComponent extends React.Component<Props> {
           <RowSpacer />
 
           <span className="date">
-            {new Date(tweet.postedAt.epochSecond * 1000).toLocaleDateString()}
+            {new Date(tweet.postedAt.epochSecond * 1000).toISOString()}
           </span>
         </header>
 
-        <section>{tweet.content}</section>
+        <section style={{ marginBottom: "16px" }}>{tweet.content}</section>
 
         {tweet.author === kc.subject && (
           <section className="actions">
