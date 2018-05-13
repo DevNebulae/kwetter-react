@@ -1,16 +1,20 @@
 import * as React from "react";
+import styled from "react-emotion";
 import { Route, Switch } from "react-router";
 import { Header } from "../header/Header";
 import { Home } from "../home/Home";
 import { Profile } from "../profile/Profile";
 import { SearchOverview } from "../search/SearchOverview";
 
-import "./styles.css";
+const AppContainer = styled("div")`
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+`;
 
 class App extends React.Component {
   public render() {
     return (
-      <div className="application__container">
+      <AppContainer>
         <Header />
 
         <Switch>
@@ -18,7 +22,7 @@ class App extends React.Component {
           <Route exact={true} path="/profile/:accountId" component={Profile} />
           <Route exact={true} path="/search" component={SearchOverview} />
         </Switch>
-      </div>
+      </AppContainer>
     );
   }
 }

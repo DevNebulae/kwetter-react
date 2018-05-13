@@ -1,7 +1,6 @@
-import * as React from "react";
+import styled from "react-emotion";
 
-import "./styles.css";
-
-export const RowSpacer: React.StatelessComponent = () => (
-  <div className="layout__row-spacer" />
-);
+export const RowSpacer = styled("div")`
+  display: grid;
+  flex: auto;
+`;

@@ -21,7 +21,7 @@ export class TweetComponent extends React.Component<Props> {
     const user = userStore.users.get(tweet.author);
 
     return (
-      <article style={{ marginBottom: "32px" }}>
+      <article style={{ marginTop: "32px" }}>
         <header className="tweet__header" style={{ marginBottom: "16px" }}>
           <span className="author">
             <Link to={`/profile/${tweet.author}`}>{user && user.username}</Link>

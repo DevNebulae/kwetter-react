@@ -34,8 +34,6 @@ export class ProfileData extends React.Component<Props, State> {
   public render() {
     const { accountId, store } = this.props;
     const user = store.users.get(accountId);
-    const isSameAccount = kc.subject === accountId;
-    const isFollowing = store.following.has(accountId);
 
     const followers = Array.from(store.followerList.values())
       .filter(follower => follower.followed === accountId)
@@ -43,6 +41,12 @@ export class ProfileData extends React.Component<Props, State> {
     const following = Array.from(store.followerList.values())
       .filter(follower => follower.follower === accountId)
       .map(follower => follower.followed);
+
+    const isSameAccount = kc.subject === accountId;
+    const isFollowing = kc.subject && followers.includes(kc.subject);
+
+    // tslint:disable-next-line
+    console.log(isFollowing);
 
     return !user || !kc.subject ? (
       <div />
@@ -126,6 +130,8 @@ export class ProfileData extends React.Component<Props, State> {
   };
 
   private onUnfollow = () => {
-    this.props.store.unfollow(this.props.accountId);
+    if (kc.subject) {
+      this.props.store.unfollow(kc.subject, this.props.accountId);
+    }
   };
 }

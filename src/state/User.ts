@@ -20,8 +20,8 @@ interface User {
 }
 
 export class UserStore {
-  @observable public followerList: Set<Follower> = new Set();
-  @observable public following: Set<string> = new Set();
+  @observable public followerList: Follower[] = [];
+  @observable public following: string[] = [];
   @observable public users: Map<string, User> = new Map();
 
   @action
@@ -31,9 +31,7 @@ export class UserStore {
     );
 
     runInAction(() => {
-      this.following.add(user.data.followed);
-      // tslint:disable-next-line
-      console.log(this.following);
+      this.followerList.push(user.data);
     });
   }
 
@@ -44,7 +42,7 @@ export class UserStore {
     );
 
     runInAction(() => {
-      this.followerList = new Set(followerList.data);
+      this.followerList = followerList.data;
     });
   }
 
@@ -55,7 +53,9 @@ export class UserStore {
     );
 
     runInAction(() => {
-      following.data.forEach(follower => this.following.add(follower.followed));
+      following.data.forEach(follower =>
+        this.following.push(follower.followed)
+      );
     });
   }
 
@@ -69,13 +69,14 @@ export class UserStore {
   }
 
   @action
-  public async unfollow(followed: string) {
+  public async unfollow(follower: string, followed: string) {
     await axios.post(`http://localhost:8080/accounts/${followed}/unfollow`);
 
     runInAction(() => {
-      this.following.delete(followed);
-      // tslint:disable-next-line
-      console.log(this.following);
+      this.followerList = this.followerList.filter(
+        following =>
+          following.follower !== follower && following.followed !== followed
+      );
     });
   }
 }

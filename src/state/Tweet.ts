@@ -16,6 +16,16 @@ export class TweetStore {
   @observable public tweets: Tweet[] = [];
 
   @action
+  public async addTweet(tweet: Tweet) {
+    this.tweets.push(tweet);
+  }
+
+  @action
+  public async deleteLocalTweet(tweetId: number) {
+    this.tweets = this.tweets.filter(tweet => tweet.id !== tweetId);
+  }
+
+  @action
   public async deleteTweet(tweetId: number) {
     await axios.delete(`http://localhost:8080/tweets/${tweetId}`);
 

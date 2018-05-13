@@ -1,10 +1,9 @@
 import axios from "axios";
 import * as React from "react";
+import styled from "react-emotion";
 import { Tweet, tweetStore } from "../../state/Tweet";
 import { userStore } from "../../state/User";
 import { TweetComponent } from "../tweet/Tweet";
-
-import "./styles.css";
 
 export interface Page<T> {
   content: T[];
@@ -24,6 +23,13 @@ interface State {
   query: string;
 }
 
+const SearchWrapper = styled("main")`
+  grid-column: 3 / span 8;
+  & > * {
+    width: 100%;
+  }
+`;
+
 export class SearchOverview extends React.Component<{}, State> {
   constructor(props: any) {
     super(props);
@@ -38,8 +44,8 @@ export class SearchOverview extends React.Component<{}, State> {
     const { currentPage, currentPageIndex, query } = this.state;
 
     return (
-      <div className="search__wrapper">
-        <form className="search__input">
+      <SearchWrapper>
+        <form>
           <input onInput={this.onInput} value={query} />
           <button onClick={this.onQuery()} type="button">
             Search
@@ -74,7 +80,7 @@ export class SearchOverview extends React.Component<{}, State> {
               );
             })}
         </main>
-      </div>
+      </SearchWrapper>
     );
   }
 
